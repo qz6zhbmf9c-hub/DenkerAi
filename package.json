@@ -1,0 +1,21 @@
+{
+  "name": "denkerai",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Learn German with AI-generated flashcards and spaced repetition.",
+  "scripts": {
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "test": "node --test test/srs.test.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.9.6"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0"
+  },
+  "engines": { "node": ">=20" }
+}

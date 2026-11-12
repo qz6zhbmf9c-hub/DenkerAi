@@ -1,0 +1,243 @@
+/* DenkerAI design system. Tokens first, then base, components, page layouts. */
+:root {
+  --bg1: #0a1730; --bg2: #0d2550; --glow: rgba(46, 120, 220, .45);
+  --green: #58cc02; --green-dark: #3f9a00; --green-light: #9cf04f;
+  --navy: #0a1730; --text: #ffffff; --muted: #b9c7e6;
+  --glass: rgba(255, 255, 255, .09); --glass-border: rgba(255, 255, 255, .22);
+  --track: rgba(255, 255, 255, .16);
+  --again: #ff7b7b; --hard: #ffc061; --good: #58cc02; --easy: #5cc0ff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0; font-family: 'Nunito', sans-serif; color: var(--text); min-height: 100vh;
+  background: radial-gradient(800px 460px at 85% -5%, var(--glow), transparent), linear-gradient(160deg, var(--bg1), var(--bg2));
+  background-attachment: fixed; overflow-x: hidden;
+  display: flex; flex-direction: column;
+}
+main { flex: 1; padding-bottom: 40px; }
+
+/* ---------- Typography ---------- */
+h1 { font-size: 50px; font-weight: 900; line-height: 1.08; margin: 0 0 16px; }
+h2 { font-size: 38px; font-weight: 900; margin: 0 0 16px; }
+h3 { font-size: 24px; font-weight: 900; margin: 0; }
+p { margin: 0 0 16px; line-height: 1.5; }
+a { color: #fff; }
+.text-muted { color: var(--muted); }
+.text-14 { font-size: 14px; } .text-18 { font-size: 18px; }
+.w700 { font-weight: 700; } .w800 { font-weight: 800; } .w900 { font-weight: 900; }
+.center { text-align: center; }
+
+/* ---------- Focus ring (keyboard users) ---------- */
+:focus-visible { outline: 3px solid var(--green-light); outline-offset: 3px; }
+.input-glass:focus-visible { outline: none; }
+
+/* ---------- Glass panel ---------- */
+.glass-panel {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border-radius: 28px; box-shadow: 0 20px 50px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .28);
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  background: var(--green); color: var(--navy); font: 800 16px 'Nunito', sans-serif;
+  border: none; border-radius: 16px; padding: 14px 26px; box-shadow: 0 4px 0 var(--green-dark);
+  cursor: pointer; transition: filter .1s, transform .1s, box-shadow .1s;
+  display: inline-flex; align-items: center; justify-content: center; text-decoration: none;
+}
+.btn-primary:hover:not(:disabled) { filter: brightness(1.1); }
+.btn-primary:active:not(:disabled) { transform: translateY(4px); box-shadow: none; }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+.btn-primary.block { width: 100%; }
+.btn-primary.small { padding: 8px 18px; font-size: 14px; border-radius: 12px; }
+
+.btn-ghost {
+  background: rgba(255, 255, 255, .1); color: #fff; font: 700 15px 'Nunito', sans-serif;
+  border: 1px solid rgba(255, 255, 255, .25); border-radius: 16px; padding: 13px 22px;
+  cursor: pointer; transition: background .2s; text-decoration: none; display: inline-flex; align-items: center;
+}
+.btn-ghost:hover:not(:disabled) { background: rgba(255, 255, 255, .16); }
+
+/* ---------- Form fields ---------- */
+.field { margin-bottom: 16px; }
+.input-label { display: block; font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.input-glass {
+  width: 100%; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 14px; padding: 13px 16px; color: #fff; font: 15px 'Nunito', sans-serif;
+}
+.input-glass:focus { border: 2px solid var(--green); padding: 12px 15px; }
+.input-glass::placeholder { color: rgba(185, 199, 230, .6); }
+.check-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 14px; color: var(--muted); }
+.check-row input { width: 18px; height: 18px; accent-color: var(--green); }
+.error-text { color: var(--again); font-size: 13px; font-weight: 700; margin-top: 6px; min-height: 0; }
+.error-text:empty { display: none; }
+
+/* ---------- Chip, progress, logo ---------- */
+.chip {
+  background: rgba(88, 204, 2, .18); border: 1px solid rgba(88, 204, 2, .5); color: var(--green-light);
+  font-weight: 800; font-size: 13px; border-radius: 20px; padding: 6px 14px; display: inline-block;
+}
+.progress-track { background: var(--track); height: 10px; border-radius: 6px; width: 100%; overflow: hidden; }
+.progress-fill { background: var(--green); height: 100%; width: 0; border-radius: 6px; transition: width .6s ease; }
+.logo { font-size: 26px; font-weight: 900; letter-spacing: -.5px; color: #fff; text-decoration: none; }
+.logo span { color: var(--green); }
+
+/* ---------- Mascot (SVG sprite injected by ui.js) ---------- */
+.mascot { position: absolute; z-index: 10; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.mascot-eye { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
+@keyframes blink { 0%, 96%, 98%, 100% { transform: scaleY(1); } 97%, 99% { transform: scaleY(.1); } }
+@media (prefers-reduced-motion: reduce) { .mascot, .mascot-eye { animation: none; } }
+
+/* ---------- Top bar and footer ---------- */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 26px 48px; }
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+.avatar {
+  width: 40px; height: 40px; background: var(--green); color: var(--navy); border: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font: 900 18px 'Nunito', sans-serif; cursor: pointer;
+}
+.footer { text-align: center; color: var(--muted); font-size: 14px; padding: 18px; }
+
+/* ---------- Welcome page ---------- */
+.welcome { display: grid; grid-template-columns: 1fr 400px; gap: 60px; padding: 30px 48px; max-width: 1200px; margin: 0 auto; align-items: center; }
+.welcome .actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.card-wrap { position: relative; }
+.card-wrap .mascot { right: -20px; top: -52px; width: 96px; }
+.card-pad { padding: 32px; }
+.narrow { max-width: 400px; margin: 60px auto 0; position: relative; padding: 0 20px; }
+.narrow .mascot { right: 0; top: -70px; width: 96px; }
+
+/* ---------- Level choice ---------- */
+.level-wrap { max-width: 620px; margin: 40px auto 0; position: relative; padding: 0 20px; }
+.level-wrap .mascot { right: 0; top: -70px; width: 84px; }
+.level-card {
+  width: 100%; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .22); color: #fff;
+  border-radius: 20px; padding: 18px 24px; font: 800 20px 'Nunito', sans-serif; margin-bottom: 12px;
+  cursor: pointer; display: flex; align-items: center; gap: 16px; transition: background .2s; text-align: left;
+}
+.level-card:hover { background: rgba(255, 255, 255, .13); }
+.level-card.selected { background: rgba(88, 204, 2, .18); border: 2px solid var(--green); padding: 17px 23px; }
+.level-card .code { width: 36px; color: var(--green-light); }
+
+/* ---------- Level test ---------- */
+.test-wrap { max-width: 760px; margin: 0 auto; padding: 20px; }
+.row-between { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.test-card { padding: 38px; position: relative; margin-top: 28px; }
+.test-card .mascot { right: -10px; top: -40px; width: 84px; }
+.test-sentence { font-size: 38px; font-weight: 900; margin: 0 0 32px; line-height: 1.2; }
+.test-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.test-grid .level-card { margin: 0; justify-content: center; font-size: 22px; text-align: center; }
+.test-foot { margin-top: 28px; }
+
+/* ---------- Dashboard ---------- */
+.dash { max-width: 1000px; margin: 0 auto; padding: 0 48px; }
+.stat-tiles, .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.stat-tiles { margin-bottom: 40px; }
+.stat-tile { padding: 18px 24px; }
+.stat-value { font-size: 34px; font-weight: 900; }
+.collection-card { padding: 20px 22px; }
+.collection-card .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.collection-card .foot { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+.collection-card .progress-track { margin-top: 14px; }
+.plus-card {
+  border: 2px dashed rgba(255, 255, 255, .25); background: rgba(255, 255, 255, .05); min-height: 150px; color: #fff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  cursor: pointer; font: 800 16px 'Nunito', sans-serif; box-shadow: none;
+}
+.plus-card:hover { background: rgba(255, 255, 255, .1); }
+.plus-badge {
+  width: 58px; height: 58px; border-radius: 50%; background: var(--green); color: var(--navy);
+  box-shadow: 0 4px 0 var(--green-dark); display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900;
+}
+.dash-mascot { position: fixed; right: 28px; bottom: 14px; width: 70px; }
+
+/* ---------- Empty state / prompt bar ---------- */
+.empty { margin-top: 90px; text-align: center; }
+.prompt-wrap { position: relative; width: 100%; max-width: 760px; margin: 0 auto; }
+.prompt-bar { height: 84px; border-radius: 42px; padding: 0 14px 0 34px; display: flex; align-items: center; }
+.prompt-bar input {
+  flex: 1; min-width: 0; background: transparent; border: none; font: 22px 'Nunito', sans-serif; color: #fff;
+}
+.prompt-bar input:focus { outline: none; }
+.prompt-bar:focus-within { border-color: var(--green); }
+.prompt-bar input::placeholder { color: rgba(255, 255, 255, .45); }
+.prompt-btn { width: 58px; height: 58px; border-radius: 50%; padding: 0; margin-left: 14px; flex-shrink: 0; }
+.prompt-wrap .mascot { right: -14px; top: -96px; width: 104px; }
+.suggestions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
+
+/* ---------- Practice ---------- */
+.practice-wrap { max-width: 680px; margin: 0 auto; padding: 20px; }
+.practice-head { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.practice-head .title { flex: 1; font-weight: 800; }
+.practice-card { margin-top: 56px; padding: 32px; text-align: center; position: relative; }
+.practice-card .mascot { right: -20px; top: -40px; width: 92px; }
+.card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+.icon-btn { padding: 8px; border-radius: 14px; }
+.card-german { font-size: 56px; font-weight: 900; margin: 0 0 24px; line-height: 1.1; overflow-wrap: anywhere; }
+.divider { height: 1px; background: rgba(255, 255, 255, .25); margin: 24px 0; }
+.card-english { font-size: 34px; font-weight: 800; color: var(--green-light); margin-bottom: 12px; }
+.rating-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; }
+.btn-rating {
+  font: 800 16px 'Nunito', sans-serif; color: var(--navy); border: none; border-radius: 16px; padding: 12px;
+  cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: transform .1s;
+}
+.btn-rating:active { transform: translateY(4px); box-shadow: none !important; }
+.btn-rating small { font-size: 12px; font-weight: 700; margin-top: 4px; }
+.btn-rating .key { font-size: 11px; font-weight: 800; opacity: .7; }
+.btn-again { background: var(--again); box-shadow: 0 4px 0 #d35050; }
+.btn-hard { background: var(--hard); box-shadow: 0 4px 0 #d39943; }
+.btn-good { background: var(--good); box-shadow: 0 4px 0 var(--green-dark); }
+.btn-easy { background: var(--easy); box-shadow: 0 4px 0 #3c9ed9; }
+.counters { display: flex; justify-content: center; gap: 36px; margin-top: 32px; text-align: center; }
+.counters .num { font-size: 18px; font-weight: 900; }
+.done-card { padding: 40px; text-align: center; margin-top: 56px; }
+
+/* ---------- Overlays ---------- */
+.overlay {
+  position: fixed; inset: 0; background: rgba(10, 23, 48, .8); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px;
+}
+.overlay.active { display: flex; }
+.modal-box { padding: 40px; text-align: center; max-width: 420px; width: 100%; position: relative; }
+.modal-box .mascot { position: static; width: 120px; margin-bottom: 16px; }
+
+/* ---------- Prose (privacy) ---------- */
+.prose-wrap { max-width: 760px; margin: 20px auto 0; padding: 0 20px; }
+.prose { padding: 36px 40px; }
+.prose h2 { font-size: 32px; }
+.prose h3 { font-size: 19px; margin: 24px 0 6px; }
+.prose li { line-height: 1.6; margin-bottom: 4px; color: var(--muted); }
+.prose p { color: var(--muted); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  h1 { font-size: 38px; }
+  .welcome { grid-template-columns: 1fr; padding: 20px; gap: 40px; }
+  .card-wrap .mascot { right: 10px; }
+  .stat-tiles { grid-template-columns: 1fr; }
+  .collection-grid { grid-template-columns: 1fr 1fr; }
+  .topbar { padding: 20px; }
+  .dash { padding: 0 20px; }
+  .empty { margin-top: 70px; }
+  .prompt-wrap { width: calc(100% - 32px); }
+}
+@media (max-width: 600px) {
+  .collection-grid { grid-template-columns: 1fr; }
+  .rating-buttons { gap: 8px; }
+  .btn-rating { padding: 10px 4px; font-size: 14px; }
+  .test-grid { grid-template-columns: 1fr; }
+  .test-card { padding: 26px; }
+  .test-sentence { font-size: 28px; }
+  .card-german { font-size: 40px; }
+  .card-english { font-size: 26px; }
+  .prompt-bar { height: 68px; padding-left: 22px; }
+  .prompt-bar input { font-size: 17px; }
+  .prompt-btn { width: 48px; height: 48px; }
+  .prose { padding: 26px 22px; }
+  .dash-mascot { display: none; }
+}
+
+/* Make the hidden attribute always win over component display rules. */
+[hidden] { display: none !important; }

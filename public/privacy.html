@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy - DenkerAI</title>
+  <meta name="description" content="Learn German with AI-made flashcards and spaced repetition.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+  <main>
+    <div class="prose-wrap">
+      <article class="glass-panel prose">
+        <h2>Privacy policy</h2>
+        <p>DenkerAI is a student project. This page explains in plain English what it stores and why.</p>
+        <h3>What we store</h3>
+        <ul>
+          <li>Your name and email address, so you can log in.</li>
+          <li>A scrambled (hashed) version of your password. We never store the password itself.</li>
+          <li>Your German level, your collections and flashcards, and your review history.</li>
+        </ul>
+        <h3>What the AI sees</h3>
+        <p>When you create a collection, the topic you type and your level are sent to an AI service to write the cards. When you take the level test, your answers are sent to it too. Your name, email and password are never sent.</p>
+        <h3>Cookies</h3>
+        <p>We use one cookie to keep you logged in for 30 days. It is not used for tracking or advertising.</p>
+        <h3>Fonts</h3>
+        <p>The Nunito font is loaded from Google Fonts, so Google may see your IP address when a page loads.</p>
+        <h3>Sharing</h3>
+        <p>We do not sell or share your data. It is stored in a database provider and a hosting provider only so the app can work.</p>
+        <h3>Your choices</h3>
+        <p>You can delete any collection from the dashboard. To delete your whole account, contact Yessine Ghariani and it will be removed.</p>
+        <p style="margin-top:24px"><a class="btn-ghost" href="/">Back to home</a></p>
+      </article>
+    </div>
+  </main>
+  <footer class="footer">© 2026 DenkerAI · Built by Yessine Ghariani</footer>
+  <div class="overlay" id="loading-modal" role="alertdialog" aria-live="polite" aria-label="Loading">
+    <div class="glass-panel modal-box">
+      <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+      <h3 id="loading-text">Denki is working...</h3>
+    </div>
+  </div>
+  <script type="module" src="/js/ui.js"></script>
+</body>
+</html>

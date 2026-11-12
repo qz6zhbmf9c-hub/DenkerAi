@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DenkerAI - Learn German</title>
+  <meta name="description" content="Learn German with AI-made flashcards and spaced repetition.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+  <main>
+    <section class="welcome">
+      <div>
+        <div class="chip" style="margin-bottom:16px">German, made for you</div>
+        <h1>Learn German with flashcards your AI builds for you.</h1>
+        <p class="text-muted text-18">Tell DenkerAI what you want to learn. It creates cards at your level, and spaced repetition makes the words stay.</p>
+        <div class="actions">
+          <button class="btn-primary" id="btn-get-started" type="button">Get started</button>
+          <a class="btn-ghost" href="/login.html">I have an account</a>
+        </div>
+      </div>
+      <div class="card-wrap">
+        <svg class="mascot" viewBox="0 0 120 120" aria-label="Denki, the DenkerAI mascot"><use href="#mascot"/></svg>
+        <div class="glass-panel card-pad" id="signup-card">
+          <h3 style="margin-bottom:24px">Create your account</h3>
+          <form id="signup-form" novalidate>
+            <div class="field"><label class="input-label" for="name">Name</label>
+              <input class="input-glass" id="name" type="text" autocomplete="name" required minlength="2" maxlength="60">
+              <div class="error-text" id="err-name" role="alert"></div></div>
+            <div class="field"><label class="input-label" for="email">Email</label>
+              <input class="input-glass" id="email" type="email" autocomplete="email" required>
+              <div class="error-text" id="err-email" role="alert"></div></div>
+            <div class="field"><label class="input-label" for="password">Password</label>
+              <input class="input-glass" id="password" type="password" autocomplete="new-password" required minlength="8" maxlength="128">
+              <div class="error-text" id="err-password" role="alert"></div></div>
+            <div class="check-row"><input type="checkbox" id="privacy" required>
+              <label for="privacy">I accept the <a href="/privacy.html">privacy policy</a></label></div>
+            <div class="error-text" id="err-privacy" role="alert" style="margin:-8px 0 12px"></div>
+            <button class="btn-primary block" type="submit" id="btn-signup">Sign up</button>
+            <p class="center text-14 text-muted" style="margin:16px 0 0">Already have an account? <a href="/login.html">Log in</a></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">© 2026 DenkerAI · Built by Yessine Ghariani</footer>
+  <div class="overlay" id="loading-modal" role="alertdialog" aria-live="polite" aria-label="Loading">
+    <div class="glass-panel modal-box">
+      <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+      <h3 id="loading-text">Denki is working...</h3>
+    </div>
+  </div>
+  <script type="module" src="/js/auth.js"></script>
+</body>
+</html>

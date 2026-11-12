@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - DenkerAI</title>
+  <meta name="description" content="Learn German with AI-made flashcards and spaced repetition.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+  <main>
+    <div class="dash">
+      <section class="empty" id="view-empty" hidden>
+        <h1 id="welcome-title">Hallo!</h1>
+        <p class="text-muted text-18" style="margin-bottom:32px">What would you like to learn first? DenkerAI will make your first collection.</p>
+        <form class="prompt-wrap" id="empty-form">
+          <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+          <div class="glass-panel prompt-bar">
+            <label class="sr-only" for="prompt-empty" style="position:absolute;left:-9999px">What do you want to learn?</label>
+            <input type="text" id="prompt-empty" maxlength="120" placeholder="For example: I want to learn animals" autocomplete="off">
+            <button class="btn-primary prompt-btn" type="submit" aria-label="Create collection">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </form>
+        <div class="suggestions" id="suggestions">
+          <button class="btn-ghost" type="button">Food</button>
+          <button class="btn-ghost" type="button">Travel</button>
+          <button class="btn-ghost" type="button">Family</button>
+          <button class="btn-ghost" type="button">Daily routine</button>
+        </div>
+        <div class="error-text" id="err-empty" role="alert" style="margin-top:20px"></div>
+      </section>
+
+      <section id="view-dashboard" hidden>
+        <div class="stat-tiles">
+          <div class="glass-panel stat-tile"><div class="text-14 text-muted w700">Due today</div><div class="stat-value" id="stat-due">0 cards</div></div>
+          <div class="glass-panel stat-tile"><div class="text-14 text-muted w700">Overall progress</div><div class="stat-value" id="stat-progress">0%</div></div>
+          <div class="glass-panel stat-tile"><div class="text-14 text-muted w700">Words learned</div><div class="stat-value" id="stat-words">0</div></div>
+        </div>
+        <div class="row-between" style="margin-bottom:16px;align-items:flex-end">
+          <h3>Your collections</h3>
+          <div class="text-14 text-muted">Anki-style spaced repetition</div>
+        </div>
+        <div class="collection-grid" id="collection-grid"></div>
+      </section>
+    </div>
+    <svg class="mascot dash-mascot" id="dash-mascot" viewBox="0 0 120 120" aria-hidden="true" hidden><use href="#mascot"/></svg>
+
+    <div class="overlay" id="new-modal" role="dialog" aria-modal="true" aria-label="New collection">
+      <form class="prompt-wrap" id="modal-form" style="max-width:760px;width:100%">
+        <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+        <div class="glass-panel prompt-bar" style="background:var(--bg1)">
+          <label for="prompt-modal" style="position:absolute;left:-9999px">What do you want to learn next?</label>
+          <input type="text" id="prompt-modal" maxlength="120" placeholder="What do you want to learn next?" autocomplete="off">
+          <button class="btn-primary prompt-btn" type="submit" aria-label="Create collection">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <button class="btn-ghost" type="button" id="btn-cancel-new" style="margin:16px 0 0 34px">Cancel</button>
+      </form>
+    </div>
+  </main>
+  <footer class="footer">© 2026 DenkerAI · Built by Yessine Ghariani</footer>
+  <div class="overlay" id="loading-modal" role="alertdialog" aria-live="polite" aria-label="Loading">
+    <div class="glass-panel modal-box">
+      <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+      <h3 id="loading-text">Denki is working...</h3>
+    </div>
+  </div>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

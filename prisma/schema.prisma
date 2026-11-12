@@ -1,0 +1,73 @@
+// DenkerAI database schema (PostgreSQL via Neon or Vercel Postgres).
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id                String       @id @default(cuid())
+  name              String
+  email             String       @unique
+  passwordHash      String
+  level             String?
+  levelSource       String?
+  privacyAcceptedAt DateTime
+  createdAt         DateTime     @default(now())
+  collections       Collection[]
+  reviews           ReviewLog[]
+}
+
+model Collection {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  prompt    String
+  level     String
+  createdAt DateTime @default(now())
+  cards     Card[]
+
+  @@index([userId])
+}
+
+model Card {
+  id             String     @id @default(cuid())
+  collectionId   String
+  collection     Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  german         String
+  english        String
+  partOfSpeech   String
+  gender         String?
+  exampleDe      String
+  exampleEn      String
+  state          String     @default("new") // new | learning | review | relearning
+  step           Int        @default(0)
+  ease           Float      @default(2.5)
+  intervalDays   Float      @default(0)
+  due            DateTime   @default(now())
+  reps           Int        @default(0)
+  lapses         Int        @default(0)
+  lastReviewedAt DateTime?
+  reviews        ReviewLog[]
+
+  @@index([collectionId, due])
+}
+
+model ReviewLog {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cardId          String
+  card            Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  rating          Int
+  prevState       String
+  newIntervalDays Float
+  reviewedAt      DateTime @default(now())
+
+  @@index([userId, reviewedAt])
+}

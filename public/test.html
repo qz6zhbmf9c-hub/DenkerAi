@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level test - DenkerAI</title>
+  <meta name="description" content="Learn German with AI-made flashcards and spaced repetition.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+  <main>
+    <div class="test-wrap">
+      <div class="row-between" style="margin-bottom:12px">
+        <div class="w700" id="progress-text" aria-live="polite">Question 1 of 12</div>
+        <div class="text-muted w700" id="progress-pct">0%</div>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="Test progress" aria-valuemin="0" aria-valuemax="100" id="progress-track">
+        <div class="progress-fill" id="progress-bar"></div>
+      </div>
+      <div class="glass-panel test-card">
+        <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+        <div class="text-muted w700 text-14" style="margin-bottom:16px">Choose the correct word</div>
+        <p class="test-sentence" id="sentence"></p>
+        <div class="test-grid" id="options" role="radiogroup" aria-label="Answers"></div>
+      </div>
+      <div class="row-between test-foot">
+        <button class="btn-ghost" id="btn-skip" type="button">Skip</button>
+        <div class="text-muted text-14 center">Keys 1 to 4 pick an answer, Enter continues.</div>
+        <button class="btn-primary" id="btn-next" type="button" disabled>Next</button>
+      </div>
+    </div>
+    <div class="overlay" id="result-modal" role="dialog" aria-modal="true" aria-labelledby="result-title">
+      <div class="glass-panel modal-box">
+        <h2 id="result-title" style="color:var(--green-light)">Your level: <span id="result-level"></span></h2>
+        <p class="text-muted text-18" id="result-reason" style="margin-bottom:28px"></p>
+        <a class="btn-primary block" href="/app.html" id="btn-lets-go">Let's go</a>
+      </div>
+    </div>
+  </main>
+  <div class="overlay" id="loading-modal" role="alertdialog" aria-live="polite" aria-label="Loading">
+    <div class="glass-panel modal-box">
+      <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+      <h3 id="loading-text">Denki is working...</h3>
+    </div>
+  </div>
+  <script type="module" src="/js/test.js"></script>
+</body>
+</html>

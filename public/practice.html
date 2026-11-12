@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice - DenkerAI</title>
+  <meta name="description" content="Learn German with AI-made flashcards and spaced repetition.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+  <main>
+    <div class="practice-wrap">
+      <div class="practice-head">
+        <a class="btn-ghost icon-btn" href="/app.html" aria-label="Close practice" style="padding:8px 16px">&#10005;</a>
+        <div class="title" id="col-title">Collection</div>
+        <div class="text-14 text-muted w700" id="count-text">0 of 0</div>
+        <div class="chip" id="col-level">Level</div>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="Session progress" id="session-track" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-fill" id="session-bar"></div>
+      </div>
+
+      <div class="glass-panel practice-card" id="flashcard" hidden>
+        <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+        <div class="card-top">
+          <div class="text-14 text-muted w700" id="card-type"></div>
+          <button class="btn-ghost icon-btn" type="button" id="btn-speak" aria-label="Play pronunciation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          </button>
+        </div>
+        <div class="card-german" id="card-german"></div>
+        <div class="divider"></div>
+        <div id="answer" hidden>
+          <div class="card-english" id="card-english"></div>
+          <div class="text-18" id="card-example-de"></div>
+          <div class="text-muted" id="card-example-en"></div>
+        </div>
+        <div id="show-wrap" style="margin-top:28px">
+          <button class="btn-primary block" type="button" id="btn-show" style="font-size:18px;padding:18px">Show answer</button>
+        </div>
+        <div class="rating-buttons" id="rating" hidden>
+          <button class="btn-rating btn-again" type="button" data-rating="1">Again <small id="lbl-1"></small><span class="key">1</span></button>
+          <button class="btn-rating btn-hard" type="button" data-rating="2">Hard <small id="lbl-2"></small><span class="key">2</span></button>
+          <button class="btn-rating btn-good" type="button" data-rating="3">Good <small id="lbl-3"></small><span class="key">3</span></button>
+          <button class="btn-rating btn-easy" type="button" data-rating="4">Easy <small id="lbl-4"></small><span class="key">4</span></button>
+        </div>
+      </div>
+
+      <div class="glass-panel done-card" id="done" hidden>
+        <h2>All done for now</h2>
+        <p class="text-muted text-18">You finished today's cards. Come back later for the next ones.</p>
+        <a class="btn-primary" href="/app.html">Back to dashboard</a>
+      </div>
+
+      <div class="counters" id="counters">
+        <div><div class="num" style="color:var(--easy)" id="cnt-new">0</div><div class="text-14 text-muted w700">New</div></div>
+        <div><div class="num" style="color:var(--again)" id="cnt-learn">0</div><div class="text-14 text-muted w700">Learning</div></div>
+        <div><div class="num" style="color:var(--green-light)" id="cnt-review">0</div><div class="text-14 text-muted w700">To review</div></div>
+      </div>
+    </div>
+  </main>
+  <div class="overlay" id="loading-modal" role="alertdialog" aria-live="polite" aria-label="Loading">
+    <div class="glass-panel modal-box">
+      <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+      <h3 id="loading-text">Denki is working...</h3>
+    </div>
+  </div>
+  <script type="module" src="/js/practice.js"></script>
+</body>
+</html>

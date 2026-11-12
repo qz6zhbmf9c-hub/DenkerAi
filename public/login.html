@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in - DenkerAI</title>
+  <meta name="description" content="Learn German with AI-made flashcards and spaced repetition.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar" id="topbar"></header>
+  <main>
+    <div class="narrow">
+      <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+      <div class="glass-panel card-pad">
+        <h3 style="margin-bottom:24px">Welcome back</h3>
+        <form id="login-form" novalidate>
+          <div class="field"><label class="input-label" for="email">Email</label>
+            <input class="input-glass" id="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label class="input-label" for="password">Password</label>
+            <input class="input-glass" id="password" type="password" autocomplete="current-password" required></div>
+          <div class="error-text center" id="err-login" role="alert" style="margin:0 0 12px"></div>
+          <button class="btn-primary block" type="submit" id="btn-login">Log in</button>
+          <p class="center text-14 text-muted" style="margin:16px 0 0">Don't have an account? <a href="/#signup-card">Sign up</a></p>
+        </form>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">© 2026 DenkerAI · Built by Yessine Ghariani</footer>
+  <div class="overlay" id="loading-modal" role="alertdialog" aria-live="polite" aria-label="Loading">
+    <div class="glass-panel modal-box">
+      <svg class="mascot" viewBox="0 0 120 120" aria-hidden="true"><use href="#mascot"/></svg>
+      <h3 id="loading-text">Denki is working...</h3>
+    </div>
+  </div>
+  <script type="module" src="/js/auth.js"></script>
+</body>
+</html>
