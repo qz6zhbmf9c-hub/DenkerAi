@@ -1,6 +1,6 @@
 # DenkerAI - AI German Flashcards & Spaced Repetition
 
-> **Hallo!** Ich bewerbe mich für eine Ausbildung als Fachinformatiker für Anwendungsentwicklung. This is a language learning web application I built.
+> **Hallo!** Ich bewerbe mich für eine Ausbildung. This is a language learning web application I built.
 
 ## About the Project
 DenkerAI is a full-stack web application designed to help people learn German. Instead of manually creating study materials, the app uses an LLM to generate custom flashcard collections and an Anki-style spaced repetition system (SRS) to schedule when you should review them.
