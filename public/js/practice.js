@@ -1,4 +1,5 @@
 // practice.html: one flashcard at a time, Anki-style rating buttons (keys 1-4).
+// The German word is read aloud automatically each time a card appears.
 import { api } from './api.js';
 import { formatDelay, requireUser } from './ui.js';
 
@@ -13,6 +14,7 @@ let done = 0;
 let current = null;
 let answerShown = false;
 let busy = false;
+let spokenId = null; // id of the card whose audio has actually started
 
 function updateCounters() {
   const count = (fn) => queue.filter(fn).length;
@@ -47,6 +49,7 @@ function showCard() {
   $('show-wrap').hidden = false;
   $('flashcard').hidden = false;
   $('btn-show').focus();
+  speak();
 }
 
 function showAnswer() {
@@ -80,10 +83,23 @@ async function rate(rating) {
 function speak() {
   if (!current || !('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(current.german);
+  const card = current;
+  const utterance = new SpeechSynthesisUtterance(card.german);
   utterance.lang = 'de-DE';
+  utterance.onstart = () => (spokenId = card.id);
   speechSynthesis.speak(utterance);
 }
+
+// Browsers only allow sound after the user has interacted with the page. If the first card
+// could not play on its own, it plays on the first tap or key press instead; after that every
+// card is read automatically.
+function playIfBlocked(e) {
+  if (!current || spokenId === current.id || e.target.closest?.('#btn-speak')) return;
+  speak();
+}
+document.addEventListener('pointerdown', playIfBlocked, { capture: true });
+document.addEventListener('keydown', playIfBlocked, { capture: true });
+window.addEventListener('pagehide', () => 'speechSynthesis' in window && speechSynthesis.cancel());
 
 $('btn-show').addEventListener('click', showAnswer);
 $('btn-speak').addEventListener('click', speak);

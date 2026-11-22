@@ -203,6 +203,41 @@ a { color: #fff; }
 .modal-box { padding: 40px; text-align: center; max-width: 420px; width: 100%; position: relative; }
 .modal-box .mascot { position: static; width: 120px; margin-bottom: 16px; }
 
+/* ---------- New collection window ---------- */
+.new-box { position: relative; width: 100%; max-width: 620px; background: var(--bg1); }
+.new-inner { max-height: calc(100vh - 120px); overflow-y: auto; padding: 28px 30px; }
+.new-box .mascot { right: 76px; top: -66px; width: 78px; }
+.new-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; padding: 6px; background: rgba(255, 255, 255, .06); border-radius: 18px; }
+.tab {
+  display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 10px; border: none; border-radius: 13px;
+  background: transparent; color: var(--muted); font: 800 15px 'Nunito', sans-serif; cursor: pointer; transition: background .15s, color .15s;
+}
+.tab:hover { color: #fff; }
+.tab.active { background: rgba(88, 204, 2, .2); color: var(--green-light); box-shadow: inset 0 0 0 2px var(--green); }
+.drop-zone {
+  border: 2px dashed rgba(255, 255, 255, .28); border-radius: 22px; padding: 22px 16px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 12px; transition: background .15s, border-color .15s;
+}
+.drop-zone.over { background: rgba(88, 204, 2, .12); border-color: var(--green); }
+.pick-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px; margin-top: 14px; }
+.thumbs:empty { display: none; }
+.thumb { position: relative; aspect-ratio: 1; border-radius: 14px; overflow: hidden; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, .06); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb button {
+  position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(10, 23, 48, .85); color: #fff; font: 900 13px 'Nunito', sans-serif; line-height: 1;
+}
+textarea.input-glass { resize: vertical; min-height: 140px; line-height: 1.5; }
+.new-foot { display: flex; justify-content: flex-end; gap: 12px; margin-top: 18px; }
+@media (max-width: 600px) {
+  .new-inner { padding: 22px 18px; }
+  .new-box .mascot { width: 62px; top: -52px; right: 60px; }
+  .tab span { font-size: 14px; }
+  .new-foot > * { flex: 1; }
+}
+
 /* ---------- Prose (privacy) ---------- */
 .prose-wrap { max-width: 760px; margin: 20px auto 0; padding: 0 20px; }
 .prose { padding: 36px 40px; }
