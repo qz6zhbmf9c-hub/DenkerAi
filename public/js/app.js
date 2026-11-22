@@ -35,7 +35,7 @@ const MAX_CHARS = 700_000; // per photo, as base64 (the server accepts up to 1,0
 const hasCamera = navigator.maxTouchPoints > 1 || matchMedia('(pointer: coarse)').matches;
 
 const $ = (id) => document.getElementById(id);
-let tab = 'photos';
+let tab = 'topic';
 let photos = []; // [{ id, url }]  url is a JPEG data URL
 let pending = 0; // photos still being shrunk
 let photoSeq = 0;
@@ -55,6 +55,9 @@ function refreshNewForm() {
     : `${words.length} ${words.length === 1 ? 'word' : 'words'}`;
   $('photo-count').textContent = `${photos.length} of ${MAX_PHOTOS} photos`;
   $('btn-camera').disabled = $('btn-files').disabled = photos.length >= MAX_PHOTOS;
+  const topicOk = $('prompt-modal').value.trim().length >= 2;
+  $('btn-topic-go').disabled = !topicOk;
+  $('btn-create').hidden = tab === 'topic'; // the topic bar has its own arrow button
   $('btn-create').disabled = tab === 'photos' ? photos.length === 0 || pending > 0 : words.length === 0;
 }
 
@@ -70,7 +73,7 @@ function renderThumbs() {
 
 function setTab(name) {
   tab = name;
-  for (const t of ['photos', 'words']) {
+  for (const t of ['topic', 'photos', 'words']) {
     $('tab-' + t).classList.toggle('active', t === name);
     $('tab-' + t).setAttribute('aria-selected', String(t === name));
     $('panel-' + t).hidden = t !== name;
@@ -140,12 +143,13 @@ function openModal() {
   setError('new-error');
   setTab(tab);
   $('new-modal').classList.add('active');
-  (tab === 'words' ? $('words-text') : $('btn-files')).focus();
+  ({ topic: $('prompt-modal'), words: $('words-text'), photos: $('btn-files') })[tab].focus();
 }
 const closeModal = () => $('new-modal').classList.remove('active');
 
 function resetNewForm() {
   photos = [];
+  $('prompt-modal').value = '';
   $('words-text').value = '';
   $('words-title').value = '';
   renderThumbs();
@@ -153,9 +157,12 @@ function resetNewForm() {
 }
 
 async function createFromModal() {
-  const body = tab === 'photos'
-    ? { mode: 'photos', images: photos.map((p) => p.url) }
-    : { mode: 'words', words: parseWords().slice(0, MAX_WORDS), title: $('words-title').value };
+  const bodies = {
+    topic: { prompt: $('prompt-modal').value.trim() },
+    photos: { mode: 'photos', images: photos.map((p) => p.url) },
+    words: { mode: 'words', words: parseWords().slice(0, MAX_WORDS), title: $('words-title').value },
+  };
+  const body = bodies[tab];
   closeModal();
   showLoading(tab === 'photos' ? 'Denki is reading your photos...' : 'Denki is writing your cards...');
   try {
@@ -221,12 +228,18 @@ document.getElementById('suggestions').addEventListener('click', (e) => {
 $('btn-own-empty').addEventListener('click', openModal);
 
 // New collection window
+$('tab-topic').addEventListener('click', () => setTab('topic'));
 $('tab-photos').addEventListener('click', () => setTab('photos'));
 $('tab-words').addEventListener('click', () => setTab('words'));
 $('btn-cancel-new').addEventListener('click', closeModal);
 $('btn-cancel-new-2').addEventListener('click', closeModal);
 document.addEventListener('keydown', (e) => e.key === 'Escape' && closeModal());
 $('btn-create').addEventListener('click', createFromModal);
+$('btn-topic-go').addEventListener('click', createFromModal);
+$('prompt-modal').addEventListener('input', refreshNewForm);
+$('prompt-modal').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !$('btn-topic-go').disabled) createFromModal();
+});
 $('words-text').addEventListener('input', refreshNewForm);
 
 $('btn-camera').hidden = !hasCamera;

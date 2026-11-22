@@ -208,7 +208,7 @@ a { color: #fff; }
 .new-inner { max-height: calc(100vh - 120px); overflow-y: auto; padding: 28px 30px; }
 .new-box .mascot { right: 76px; top: -66px; width: 78px; }
 .new-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; padding: 6px; background: rgba(255, 255, 255, .06); border-radius: 18px; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; padding: 6px; background: rgba(255, 255, 255, .06); border-radius: 18px; }
 .tab {
   display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 10px; border: none; border-radius: 13px;
   background: transparent; color: var(--muted); font: 800 15px 'Nunito', sans-serif; cursor: pointer; transition: background .15s, color .15s;
@@ -234,6 +234,8 @@ textarea.input-glass { resize: vertical; min-height: 140px; line-height: 1.5; }
 @media (max-width: 600px) {
   .new-inner { padding: 22px 18px; }
   .new-box .mascot { width: 62px; top: -52px; right: 60px; }
+  .tab { padding: 11px 4px; gap: 0; }
+  .tab svg { display: none; }
   .tab span { font-size: 14px; }
   .new-foot > * { flex: 1; }
 }
