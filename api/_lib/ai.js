@@ -5,9 +5,12 @@
 
 const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
-// Vision models, tried in order. Groq retired llama-4-scout on 2026-07-17,
-// so the default is now Qwen. AI_VISION_MODEL (if set) is always tried first.
+// Vision models, tried in order. Groq retires models often, so this is a list:
+// if one returns 404 / model_not_found, the next is tried automatically.
+// AI_VISION_MODEL (if set) is always tried first.
 const VISION_MODEL_CHAIN = [
+  'qwen/qwen3.8-27b',
+  'meta-models/muse-spark-open',
   'qwen/qwen3.6-27b',
   'meta-llama/llama-4-scout-17b-16e-instruct',
 ];
@@ -70,7 +73,7 @@ async function askJson(system, user, models = process.env.AI_MODEL) {
     } catch (err) {
       lastError = err;
       if (!(err instanceof ModelNotFoundError)) throw err; // real error: don't retry
-      console.error(`[ai] model unavailable, trying next: ${model}`);
+      console.error(`[ai] model not available: ${model}`);
     }
   }
   throw lastError;
