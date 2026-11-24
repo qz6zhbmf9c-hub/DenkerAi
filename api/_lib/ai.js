@@ -5,15 +5,17 @@
 
 const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
-// Groq's vision-capable Llama 4 model. Override it with AI_VISION_MODEL.
-const DEFAULT_VISION_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct';
+// Vision models, tried in order. Groq retired llama-4-scout on 2026-07-17,
+// so the default is now Qwen. AI_VISION_MODEL (if set) is always tried first.
+const VISION_MODEL_CHAIN = [
+  'qwen/qwen3.6-27b',
+  'meta-llama/llama-4-scout-17b-16e-instruct',
+];
 
-/** `user` is a string, or an array of content parts (text + image_url) for vision. */
-async function askJson(system, user, model = process.env.AI_MODEL) {
-  if (!process.env.AI_API_KEY || !model) {
-    throw new Error('AI_API_KEY and AI_MODEL must be set.');
-  }
+class ModelNotFoundError extends Error {}
 
+/** One request to one model. Throws ModelNotFoundError if the model is gone. */
+async function callModel(system, user, model) {
   const res = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -22,7 +24,7 @@ async function askJson(system, user, model = process.env.AI_MODEL) {
     },
     body: JSON.stringify({
       model,
-      response_format: { type: "json_object" },
+      response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: system + '\nReply with one valid JSON object only. No markdown, no commentary.' },
         { role: 'user', content: user }
@@ -32,16 +34,46 @@ async function askJson(system, user, model = process.env.AI_MODEL) {
 
   if (!res.ok) {
     const errText = await res.text();
-    throw new Error(`Groq API request failed with status ${res.status}: ${errText}`);
+    const msg = `Groq API request failed with status ${res.status} (model ${model}): ${errText}`;
+    if (res.status === 404 || errText.includes('model_not_found')) {
+      throw new ModelNotFoundError(msg);
+    }
+    throw new Error(msg);
   }
-  
+
   const data = await res.json();
-  const text = data.choices?.[0]?.message?.content || '';
+  let text = data.choices?.[0]?.message?.content || '';
+
+  // Some reasoning models wrap their thinking in <think> tags.
+  text = text.replace(/<think>[\s\S]*?<\/think>/g, '');
 
   const start = text.indexOf('{');
   const end = text.lastIndexOf('}');
   if (start === -1 || end === -1) throw new Error('AI reply contained no JSON.');
   return JSON.parse(text.slice(start, end + 1));
+}
+
+/**
+ * `user` is a string, or an array of content parts (text + image_url) for vision.
+ * `models` is one model name or a list to try in order.
+ */
+async function askJson(system, user, models = process.env.AI_MODEL) {
+  const list = (Array.isArray(models) ? models : [models]).filter(Boolean);
+  if (!process.env.AI_API_KEY || list.length === 0) {
+    throw new Error('AI_API_KEY and AI_MODEL must be set.');
+  }
+
+  let lastError;
+  for (const model of list) {
+    try {
+      return await callModel(system, user, model);
+    } catch (err) {
+      lastError = err;
+      if (!(err instanceof ModelNotFoundError)) throw err; // real error: don't retry
+      console.error(`[ai] model unavailable, trying next: ${model}`);
+    }
+  }
+  throw lastError;
 }
 
 /** Estimates a CEFR level from the learner's test answers. */
@@ -112,6 +144,6 @@ export async function generateFromPhotos(level, images) {
     { type: 'text', text: 'Make flashcards from these photos.' },
     ...images.map((url) => ({ type: 'image_url', image_url: { url } })),
   ];
-  const model = process.env.AI_VISION_MODEL || DEFAULT_VISION_MODEL;
-  return checkShape(await askJson(system, content, model), true);
+  const models = [process.env.AI_VISION_MODEL, ...VISION_MODEL_CHAIN].filter(Boolean);
+  return checkShape(await askJson(system, content, [...new Set(models)]), true);
 }
